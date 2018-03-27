@@ -1,0 +1,15 @@
+---
+- name: Save Configurations (IOS)
+  hosts: hglxmfwswxx
+  vars:
+    creds:
+      username: "sander"
+      password: "AD$%5min"
+  tasks:
+    - ios_command:
+        provider: "{{ creds }}"
+        commands: show run
+      register: show_run
+
+    - debug:
+        msg: "{{ show_run }}"

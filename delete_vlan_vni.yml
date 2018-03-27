@@ -1,0 +1,37 @@
+---
+
+- name: DELETE_VLAN_VNI_MAPPING
+  hosts: hglxmfwswxx
+  ignore_errors: yes
+  connection: local
+  gather_facts: no
+
+  vars:
+      nxos_provider:
+        username: "{{ un }}"
+        password: "{{ pwd }}"
+        transport: nxapi
+        host: "{{ inventory_hostname }}"
+
+  tasks:
+
+  - name: CREATE NO APPLY CONFIG
+    template:
+       src: templates/delete_vlan_vni_no_apply.j2
+       dest: configs/delete_vlan_vni_no_apply.cfg
+
+  - name: CREATE NO PROFILE CONFIG
+    template:
+       src: templates/delete_vlan_vni_no_profile.j2
+       dest: configs/delete_vlan_vni_no_profile.cfg
+
+  - name: APPLY NO APPLY CONFIG
+    nxos_config:
+      src: configs/delete_vlan_vni_no_apply.cfg
+      provider: "{{ nxos_provider }}"
+
+  - name: APPLY NO PROFILE CONFIG              
+    nxos_config:
+      src: configs/delete_vlan_vni_no_profile.cfg   
+      provider: "{{ nxos_provider }}"
+

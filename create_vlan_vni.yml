@@ -1,0 +1,38 @@
+---
+
+- name: CREATE_VLAN_VNI_MAPPING
+  hosts: hglxmfwswxx
+  connection: local
+  gather_facts: no
+
+  vars:
+      nxos_provider:
+        username: "{{ un }}"
+        password: "{{ pwd }}"
+        transport: nxapi
+        host: "{{ inventory_hostname }}"
+
+  tasks:
+
+  - name: INCLUDE_VARS
+    include_vars: vars/create_vlan_vni.yaml
+
+  - name: BUILD CONFIG
+    template:
+       src: templates/create_vlan_vni.j2
+       dest: configs/create_vlan_vni.cfg
+
+  - name: PUSH CONFIG
+    nxos_config:
+      src: configs/create_vlan_vni.cfg
+      provider: "{{ nxos_provider }}"
+
+  - name: CREATE APPLY CONFIG
+    template:
+       src: templates/apply_vlan_vni.j2
+       dest: configs/apply_vlan_vni.cfg
+
+  - name: APPLY CONFIG
+    nxos_config:
+      src: configs/apply_vlan_vni.cfg
+      provider: "{{ nxos_provider }}"

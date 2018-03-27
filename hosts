@@ -1,0 +1,12 @@
+[all:vars]
+ansible_connection = local
+un=sander
+pwd=XXXXXXXXX
+
+[hglxmfwswxx]
+hgl1mfwsw11
+hgl1mfwsw12
+hgl2mfwsw11
+hgl2mfwsw12
+
+

@@ -1,0 +1,25 @@
+- name: BUILDING CONFIG
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+        VNI:
+                - {
+                        ip_address : "{{ ip_address }}",
+                        vni : "{{ vni }}",
+                        vlan : "{{ vlan }}"
+                   }
+  tasks:
+          - name: Building Config for leafs
+            template: src=templates/add_vlan_vni_l3.j2 dest=configs/add_vlan_vni_l3.cfg
+            with_items: "{{ VNI }}"
+
+- name: PUSHING CONFIG
+  hosts: leaf
+  connection: local
+  gather_facts: false
+  tasks:
+           - name: Pushing Config to leafs
+             nxos_config:
+                     src=configs/add_vlan_vni_l3.cfg
+

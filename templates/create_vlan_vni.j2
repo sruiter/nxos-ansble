@@ -1,0 +1,13 @@
+configure profile {{ profile_name }}
+  vlan {{ vlan_id }}
+    name {{ profile_name }}
+    vn-segment 1111{{ vlan_id }}
+  interface nve1
+    member vni 1111{{ vlan_id }}
+      mcast-group 239.1.1.2
+  evpn
+    vni 1111{{ vlan_id }} l2
+      rd auto
+      route-target import auto
+      route-target export auto
+

@@ -1,0 +1,8 @@
+--------------------------------------------------
+ansible-playbook create_vlan_vni.yaml --extra-vars "profile_name=HGLxMFW12-WAN-ROOT vlan_id=2961"
+ansible-playbook delete_vlan_vni.yaml --extra-vars "profile_name=HGLxMFWxx-WAN"
+
+ansible-playbook add_and_push_vlan_po.yaml --extra-vars "po_num=15 vlan_id=2961"
+ansible-playbook remove_and_push_vlan_po.yaml --extra-vars "po_num=15 vlan_id=3901"
+
+ansible-playbook wr_mem.yaml

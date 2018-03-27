@@ -1,0 +1,22 @@
+vlan {{ item.vlan }}
+vn-segment {{ item.vni }}
+!
+int vlan {{ item.vlan }}
+vrf member HQ
+ip address {{ item.ip_address }}
+fabric forwarding mode anycast-gateway
+no shut
+!
+int nve1
+member vni {{ item.vni }}
+suppress-arp
+mcast-group 239.1.1.1
+exit
+exit
+!
+evpn
+vni {{ item.vni }} l2
+rd auto
+route-target import auto
+route-target export auto
+

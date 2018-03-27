@@ -1,0 +1,23 @@
+- name: ADD AND PUSH VLAN TO POx
+  hosts: hglxmfwswxx
+  connection: local
+  gather_facts: no
+
+  vars:
+      nxos_provider:
+        username: "{{ un }}"
+        password: "{{ pwd }}"
+        transport: nxapi
+        host: "{{ inventory_hostname }}"
+
+  tasks:
+  - name: BUILD CONFIG
+    template:
+       src: templates/add_vlan_po.j2
+       dest: configs/add_vlan_po.cfg
+
+  - name: PUSH CONFIG
+    nxos_config:
+      src: configs/add_vlan_po.cfg
+      provider: "{{ nxos_provider }}"
+

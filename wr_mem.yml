@@ -1,0 +1,17 @@
+- name: COPY RUN START
+  hosts: hglxmfwswxx
+  connection: local
+  gather_facts: no
+
+  vars:
+      nxos_provider:
+        username: "{{ un }}"
+        password: "{{ pwd }}"
+        transport: nxapi
+        host: "{{ inventory_hostname }}"
+
+  tasks:
+  - name: SAVE CONFIG (WRITE MEM)
+    nxos_config:
+      src: configs/copy_run_start.cfg
+      provider: "{{ nxos_provider }}"
